@@ -6,7 +6,7 @@ import axios from 'axios';
 @Resolver()
 export class JokeResolver { 
     @Query(() => [ String ])
-    async categories() {
+    async categories(): Promise<[String]>{
         try {
             const response = await axios.get('https://api.chucknorris.io/jokes/categories'); 
             const { data } = response
@@ -17,12 +17,12 @@ export class JokeResolver {
     }
 
     @Query(returns => jokeObject)
-    async joke(@Arg("category") category: string) {
+    async joke(@Arg("category") category: string): Promise<jokeObject> {
         try {
             const response = await axios.get(`https://api.chucknorris.io/jokes/random?category=${category}`)
             return response.data
          } catch (error) {
-             console.log(error, '???')
+             console.log(error, '>>>>>>>>>')
              throw new Error(error)
          }
     }
