@@ -22,7 +22,6 @@ export class JokeResolver {
             const response = await axios.get(`https://api.chucknorris.io/jokes/random?category=${category}`)
             return response.data
          } catch (error) {
-             console.log(error, '>>>>>>>>>')
              throw new Error(error)
          }
     }
