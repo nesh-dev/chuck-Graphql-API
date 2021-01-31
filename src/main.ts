@@ -1,12 +1,16 @@
 
 import { ApolloServer } from 'apollo-server';
+import { buildSchema } from 'type-graphql';
 import { environment } from './environment';
-import resolvers from './resolvers';
-import typeDefs from './type-defs';
+import {JokeResolver} from './resolvers';
+import "reflect-metadata";
 
-const server = new ApolloServer({ 
-    resolvers, 
-    typeDefs, 
+
+(async () => {
+  const server = new ApolloServer({ 
+    schema: await buildSchema({
+      resolvers: [JokeResolver], 
+    }),
     introspection: environment.apollo.introspection,
     playground: environment.apollo.playground
 });
@@ -17,3 +21,6 @@ if (module.hot) {
   module.hot.accept();
   module.hot.dispose(() => server.stop());
 }
+
+})();
+
